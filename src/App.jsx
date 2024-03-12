@@ -5,10 +5,10 @@ import SicBoController from "./controller/SicBoController";
 import io from "socket.io-client";
 import { WaittingPage } from "./components/WaittingPage/WaittingPage";
 import "./App.css";
-import { Content } from "antd/es/layout/layout";
+const isProduction = true;
 function App() {
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io(isProduction ? "https://sic-bo.onrender.com/" : "http://localhost:3000/");
     socket.on("state", (data) => {
       console.log("Socket state: ", data);
       initGame(data.state);
