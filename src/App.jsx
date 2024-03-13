@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Button, Layout, List, Space, Typography, Radio, Spin } from "antd";
+import { Button, List, Space, Typography, Radio, Spin } from "antd";
 import SicBo from "./sic_bo";
 import SicBoController from "./controller/SicBoController";
 import io from "socket.io-client";
@@ -8,7 +8,9 @@ import "./App.css";
 const isProduction = true;
 function App() {
   useEffect(() => {
-    const socket = io(isProduction ? "https://sic-bo.onrender.com/" : "http://localhost:3000/");
+    const socket = io(
+      isProduction ? "https://sic-bo.onrender.com/" : "http://localhost:3000/"
+    );
     socket.on("state", (data) => {
       console.log("Socket state: ", data);
       initGame(data.state);
@@ -19,11 +21,20 @@ function App() {
   const [totalUnder, setTotalUnder] = useState(0);
 
   function initGame(state) {
-    setGameState(state);
     if (state === null) {
+      setGameState(state);
       console.log("Game started", state);
       return;
     }
+    const previousAddress = gameState?.address;
+    setGameState(state);
+    if (previousAddress === state.address) {
+      return;
+    }
+    setTotalOver(0);
+    setTotalUnder(0);
+    setUnders([]);
+    setOvers([]);
     controller.startGame(state.address);
     updateBets(state.address);
     const sicBo = SicBo(state.address);
@@ -182,7 +193,15 @@ function App() {
           })}
         </Radio.Group>
       </div>
-      <div style={{ width: "100%", flexDirection: "row", display: "flex", padding: "20px", marginTop: "20px" }}>
+      <div
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          display: "flex",
+          padding: "20px",
+          marginTop: "20px",
+        }}
+      >
         <div style={{ width: "50%", paddingLeft: "20px" }}>
           <Typography.Title level={1}>Xỉu</Typography.Title>
           <List
