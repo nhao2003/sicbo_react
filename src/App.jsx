@@ -5,7 +5,7 @@ import SicBoController from "./controller/SicBoController";
 import io from "socket.io-client";
 import { WaittingPage } from "./components/WaittingPage/WaittingPage";
 import "./App.css";
-const isProduction = false;
+const isProduction = true;
 function App() {
   useEffect(() => {
     const socket = io(
