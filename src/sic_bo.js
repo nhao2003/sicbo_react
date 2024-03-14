@@ -59,12 +59,17 @@ const abi = [
   {
     inputs: [
       {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+      {
         internalType: "uint256",
         name: "",
         type: "uint256",
       },
     ],
-    name: "bets",
+    name: "betsMap",
     outputs: [
       {
         internalType: "address",
@@ -139,9 +144,9 @@ const abi = [
             type: "bool",
           },
         ],
-        internalType: "struct SicBo.Bet[]",
+        internalType: "struct SicBo.Bet[][]",
         name: "",
-        type: "tuple[]",
+        type: "tuple[][]",
       },
     ],
     stateMutability: "view",
@@ -189,13 +194,7 @@ const abi = [
   {
     inputs: [],
     name: "settle",
-    outputs: [
-      {
-        internalType: "uint256[3]",
-        name: "",
-        type: "uint256[3]",
-      },
-    ],
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },

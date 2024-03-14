@@ -16,7 +16,7 @@ class SicBoController {
     const accounts = await this.web3.eth.getAccounts();
     await this.sicBo.methods.bet(isOver).send({
       from: accounts[0],
-      value: amount,
+      value: this.web3.utils.toWei(amount, "Gwei"),
     });
   }
 

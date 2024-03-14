@@ -5,7 +5,7 @@ import SicBoController from "./controller/SicBoController";
 import io from "socket.io-client";
 import { WaittingPage } from "./components/WaittingPage/WaittingPage";
 import "./App.css";
-const isProduction = true;
+const isProduction = false;
 function App() {
   useEffect(() => {
     const socket = io(
@@ -44,8 +44,8 @@ function App() {
   }
   async function updateBets(address) {
     const sicBo = SicBo(address);
-    const bets = await sicBo.methods.getBets().call();
-    console.table(bets);
+    const res = await sicBo.methods.getBets().call();
+    const bets = res[0].concat(res[1]); // Nối mảng res[0] và res[1] thành một mảng duy nhất
     let totalOver = 0;
     let totalUnder = 0;
     let unders = [];
@@ -67,7 +67,7 @@ function App() {
 
   const [unders, setUnders] = useState([]);
   const [overs, setOvers] = useState([]);
-  const [betAmount, setBetAmount] = useState(100000);
+  const [betAmount, setBetAmount] = useState(10000);
   const controllerRef = useRef(new SicBoController());
   const controller = controllerRef.current;
   const [isOverBetButtonLoading, setIsOverBetButtonLoading] = useState(false);
@@ -179,11 +179,11 @@ function App() {
           onChange={async (e) => {
             setBetAmount(e.target.value);
           }}
-          defaultValue={100000}
+          defaultValue={10000}
         >
           {[
-            100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000,
-            900000, 1000000,
+            10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000,
+            100000,
           ].map((value) => {
             return (
               <Radio.Button key={value} value={value}>
